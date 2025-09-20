@@ -40,9 +40,9 @@ fun program1()
     println ("Программа подсчитывает количество подряд идущих одинаковых символов. \n")
     println("Введите строку:")
     val input = readln()
-    val result = StringBuilder() // класс для работы с изменяемыми строками
+    var result = ""
     var count = 1
-    val length = input.length // определяет кол-во символов в этой строке
+    val length = input.length
     for (i in 1 until length)
     {
         if (input[i] == input[i - 1])
@@ -51,18 +51,19 @@ fun program1()
         }
         else
         {
-            result.append(input[i - 1])
+            result += input[i - 1]
             if (count > 1)
             {
-                result.append(count)
+                result += count
+
             }
             count = 1
         }
     }
-    result.append(input[length - 1])
+    result += input[length - 1]
     if (count > 1)
     {
-        result.append(count)
+        result += count
     }
     println("Вывод результата: $result")
 }
@@ -72,17 +73,17 @@ fun program2()
     println ("Приложение подсчитывает количество различных символов во введенной строке в алфавитном порядке. \n")
     println ("Введите строку: ")
     val input = readln()
-    val charCnt = mutableMapOf <Char, Int>() //изменяемая карта, котороая позволяет добавлять, удалять и обновлять пары ключ-значения
+    val charCnt = mutableMapOf <Char, Int>()
 
-    for (char in input)
+    for (item in input)
     {
-        if (charCnt.containsKey(char)) //проверяет существует ли в MAP определенный ключ
+        if (charCnt.containsKey(item))
             {
-                charCnt[char] = charCnt[char]!! + 1
+                charCnt[item] = charCnt[item]!! + 1
             }
         else
         {
-            charCnt[char]=1
+            charCnt[item]=1
         }
     }
     val sortedKeys = charCnt.keys.sorted()
@@ -124,15 +125,15 @@ fun program4()
 {
     println("Приложение простого калькулятора.\n")
     println("Введите выражение в формате - ЧИСЛО1 ЧИСЛО2 ОПЕРАЦИЯ: ")
-    val input = readln().trim() // удаляет пробелы
+    val input = readln().trim()
     val parts = input.split(" ")
     if (parts.size != 3)
     {
         println("Ошибка: введите выражение в формате ЧИСЛО1 ЧИСЛО2 ОПЕРАЦИЯ")
         return
     }
-    val number1 = parts[0].toDoubleOrNull()
-    val number2 = parts[1].toDoubleOrNull()
+    val number1 = parts[0].toIntOrNull()
+    val number2 = parts[1].toIntOrNull()
     val operation = parts[2]
     if (number1 == null || number2 == null)
     {
@@ -158,7 +159,7 @@ fun program4()
         }
         "/" ->
         {
-            if (number2 == 0.0)
+            if (number2 == 0)
             {
                 println("Ошибка: деление на ноль невозможно")
             } else
