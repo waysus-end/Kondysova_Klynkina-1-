@@ -13,10 +13,8 @@ fun main()
         println("║ 6. Задача 6                   ║")
         println("║ 0. Выход                      ║")
         println("╚═══════════════════════════════╝")
-
         print("Выберите программу (0-6): \n")
         val choice = readln().toIntOrNull()
-
         when (choice)
         {
             0 ->
@@ -32,23 +30,19 @@ fun main()
             6 -> program6()
             else -> println("Ошибка: выберите число от 0 до 6")
         }
-
         println("\nНажмите Enter для продолжения...\n")
         readln()
     }
 }
-
-
-
 // Задача 1
 fun program1()
 {
     println ("Программа подсчитывает количество подряд идущих одинаковых символов. \n")
     println("Введите строку:")
     val input = readln()
-    val result = StringBuilder()
+    val result = StringBuilder() // класс для работы с изменяемыми строками
     var count = 1
-    val length = input.length
+    val length = input.length // определяет кол-во символов в этой строке
     for (i in 1 until length)
     {
         if (input[i] == input[i - 1])
@@ -78,11 +72,11 @@ fun program2()
     println ("Приложение подсчитывает количество различных символов во введенной строке в алфавитном порядке. \n")
     println ("Введите строку: ")
     val input = readln()
-    val charCnt = mutableMapOf <Char, Int>()
+    val charCnt = mutableMapOf <Char, Int>() //изменяемая карта, котороая позволяет добавлять, удалять и обновлять пары ключ-значения
 
     for (char in input)
     {
-        if (charCnt.containsKey(char))
+        if (charCnt.containsKey(char)) //проверяет существует ли в MAP определенный ключ
             {
                 charCnt[char] = charCnt[char]!! + 1
             }
@@ -130,7 +124,7 @@ fun program4()
 {
     println("Приложение простого калькулятора.\n")
     println("Введите выражение в формате - ЧИСЛО1 ЧИСЛО2 ОПЕРАЦИЯ: ")
-    val input = readln().trim()
+    val input = readln().trim() // удаляет пробелы
     val parts = input.split(" ")
     if (parts.size != 3)
     {
@@ -244,8 +238,8 @@ fun program5()
             println ("Показатель степени y = $y")
             return
         }
-
-        if (power > n || power < n && power == 0) {
+        if (power > n || power < n && power == 0)
+        {
             break
         }
         val nextPow = power * X
@@ -253,7 +247,6 @@ fun program5()
         {
             break
         }
-
         power = nextPow
         y++
     }
