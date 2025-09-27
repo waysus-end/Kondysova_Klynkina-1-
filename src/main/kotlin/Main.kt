@@ -13,12 +13,13 @@ fun main()
         println("║ 6. Задача 6                   ║")
         println("║ 0. Выход                      ║")
         println("╚═══════════════════════════════╝")
-        print("Выберите программу (0-6): \n")
+        print("Выберите программу (0-6): ")
+
         val choice = readln().toIntOrNull()
+
         when (choice)
         {
-            0 ->
-            {
+            0 -> {
                 println("Выход из программы.")
                 return
             }
@@ -30,239 +31,156 @@ fun main()
             6 -> program6()
             else -> println("Ошибка: выберите число от 0 до 6")
         }
-        println("\nНажмите Enter для продолжения...\n")
+        println("\nНажмите Enter для продолжения...")
         readln()
     }
 }
-// Задача 1
+
+
+
 fun program1()
 {
     println ("Программа подсчитывает количество подряд идущих одинаковых символов. \n")
     println("Введите строку:")
-    val input = readln()
+    val s = readln()
     var result = ""
     var count = 1
-    val length = input.length
-    for (i in 1 until length)
+    for (i in 1 until s.length)
     {
-        if (input[i] == input[i - 1])
-        {
+        if (s[i] == s[i - 1])
             count++
-        }
         else
         {
-            result += input[i - 1]
-            if (count > 1)
-            {
-                result += count
+            result += s[i - 1]
 
-            }
-            count = 1
+            if (count > 1)
+                result += "$count"
+                count = 1
         }
     }
-    result += input[length - 1]
-    if (count > 1)
+    if (s.isNotEmpty())
     {
-        result += count
+        result += s.last()
+        if (count > 1) result += "$count"
     }
-    println("Вывод результата: $result")
+    println("Результат: $result")
 }
-//Задача 2
+
+
 fun program2()
 {
     println ("Приложение подсчитывает количество различных символов во введенной строке в алфавитном порядке. \n")
-    println ("Введите строку: ")
-    val input = readln()
-    val charCnt = mutableMapOf <Char, Int>()
-
-    for (item in input)
-    {
-        if (charCnt.containsKey(item))
-            {
-                charCnt[item] = charCnt[item]!! + 1
-            }
-        else
-        {
-            charCnt[item]=1
-        }
-    }
-    val sortedKeys = charCnt.keys.sorted()
-    println ("Результат: ")
-    for (char in sortedKeys)
-    {
-        println ("$char-${charCnt[char]}")
-    }
+    println("Введите строку:")
+    val s = readln()
+    val countMap = mutableMapOf<Char, Int>()
+    for (c in s)
+        countMap[c] = (countMap[c] ?: 0) + 1
+    val keys = countMap.keys.sorted()
+    for (k in keys)
+        println("$k - ${countMap[k]}")
 }
 
-//Задача 3
+
+
 fun program3()
 {
     println("Приложение, которое преобразует введенное пользователем натуральное число из 10-ичной системы в двоичную.\n")
-    println("Введите натуральное число из 10-ичной системы счисления: ")
-    val input = readln()
-    if (input.all { it.isDigit() }&& input.isNotEmpty())
+    println("Введите число:")
+    val num = readln().toIntOrNull()
+    if (num == null || num < 0)
     {
-        val num = input.toInt()
-        if (num == 0)
-        {
-            println("Результат: 0")
-        }
-        else {
-            val numb = num.toString(2)
-            println("Результат преобразования: ")
-            println("Десятичное число: $num")
-            println("Двоичное число: $numb")
-        }
+        println("Ошибка: введите натуральное число.")
+        return
     }
-    else
-    {
-        println("Число введено не корректно! \n Введите корректное число!")
-    }
+    println("Десятичное: $num")
+    println("Двоичное: ${Integer.toBinaryString(num)}")
 }
 
-//Задача 4
+
+
 fun program4()
 {
     println("Приложение простого калькулятора.\n")
-    println("Введите выражение в формате - ЧИСЛО1 ЧИСЛО2 ОПЕРАЦИЯ: ")
-    val input = readln().trim()
-    val parts = input.split(" ")
+    println("Введите выражение (число1 число2 операция):")
+    val parts = readln().split(" ")
+
     if (parts.size != 3)
     {
-        println("Ошибка: введите выражение в формате ЧИСЛО1 ЧИСЛО2 ОПЕРАЦИЯ")
+        println("Ошибка: неверный формат.")
         return
     }
-    val number1 = parts[0].toIntOrNull()
-    val number2 = parts[1].toIntOrNull()
-    val operation = parts[2]
-    if (number1 == null || number2 == null)
+
+    val n1 = parts[0].toIntOrNull()
+    val n2 = parts[1].toIntOrNull()
+    val op = parts[2]
+
+    if (n1 == null || n2 == null)
     {
-        println("Ошибка: введите корректные числа")
+        println("Ошибка: введены не числа.")
         return
     }
-    when (operation)
+    when (op)
     {
-        "+" ->
-        {
-            val result = number1 + number2
-            println("Результат: $number1 + $number2 = $result")
-        }
-        "-" ->
-        {
-            val result = number1 - number2
-            println("Результат: $number1 - $number2 = $result")
-        }
-        "*" ->
-        {
-            val result = number1 * number2
-            println("Результат: $number1 * $number2 = $result")
-        }
-        "/" ->
-        {
-            if (number2 == 0)
-            {
-                println("Ошибка: деление на ноль невозможно")
-            } else
-            {
-                val result = number1 / number2
-                println("Результат: $number1 / $number2 = $result")
-            }
-        }
-        else ->
-        {
-            println("Ошибка: неизвестная операция '$operation'. Доступные операции: + - * /")
-        }
+        "+" -> println("$n1 + $n2 = ${n1 + n2}")
+        "-" -> println("$n1 - $n2 = ${n1 - n2}")
+        "*" -> println("$n1 * $n2 = ${n1 * n2}")
+        "/" -> if (n2 == 0)
+            println("Ошибка: деление на ноль.")
+        else
+            println("$n1 / $n2 = ${n1 / n2}")
+
+        else -> println("Ошибка: неизвестная операция.")
     }
 }
-//Задача 5
+
+
+
 fun program5()
 {
     println("Приложение, с помощью которого пользователь, введя целое " +
             "число n и основание степени x узнает, существует ли целочисленный показатель " +
             "степени y для которого выполняется равенство xy = n. \n")
-    println("Введите целое число n: ")
-    val ninp = readln()
-    val n= ninp.toIntOrNull()
-    if (n==null)
+    println("Введите число n:")
+    val n = readln().toIntOrNull()
+    println("Введите основание x:")
+    val x = readln().toIntOrNull()
+    if (n == null || x == null)
     {
-        println("Ошибка: введите корректное целое число")
+        println("Ошибка ввода.")
         return
     }
-    print("Введите основание степени x: ")
-    val xinp = readln()
-    val X=xinp.toIntOrNull()
-    if (X == null)
+    if (x == 0 || x == 1)
     {
-        println("Ошибка: введите корректное основание степени")
-        return
-    }
-    if (X==0||X==1)
-    {
-        if (n==1)
-        {
-            println("Показатель степени y=0 ")
-        }
-        else if (X==0 && n==0)
-        {
-            println("Показатель степени y=1 ")
-        }
+        if (n == 1)
+            println("y = 0")
         else
-        {
             println("Целочисленного показателя не существует")
-        }
         return
     }
-    if (n==0)
+    var power = 1
+    var y = 0
+    while (power < n)
     {
-        println("Показатель степени y=0 ")
-        return
-    }
-    if (n==0)
-    {
-        if (X==0)
-        {
-            println("Показатель степени y=1 ")
-        }
-        else
-        {
-            println("Целочисленного показателя не существует")
-        }
-        return
-    }
-    var y=0
-    var power=1
-
-    while (true)
-    {
-        if (power == n)
-        {
-            println ("Показатель степени y = $y")
-            return
-        }
-        if (power > n || power < n && power == 0)
-        {
-            break
-        }
-        val nextPow = power * X
-        if (nextPow / X!= power)
-        {
-            break
-        }
-        power = nextPow
+        power *= x
         y++
     }
-    println ("Целочисленного показателя не существует")
+    if (power == n)
+        println("y = $y")
+    else
+        println("Целочисленного показателя нет")
 }
-//Задача 6
+
+
+
 fun program6()
 {
     println("Приложение, в котором пользователь вводит две различных цифры. " +
-                "На выходе приложение выдает, если это возможно, из введенных цифр, нечетное число. \n"
-    )
-    println("Введите первую цифру: ")
+            "На выходе приложение выдает, если это возможно, из введенных цифр, нечетное число. \n")
+    print("Введите первую цифру: ")
     val digit1 = readln().toIntOrNull()
     print("Введите вторую цифру: ")
     val digit2 = readln().toIntOrNull()
+
     if (digit1 == null || digit2 == null)
     {
         println("Ошибка: введите корректные цифры (0-9)")
@@ -291,7 +209,6 @@ fun program6()
         else -> null
     }
 
-
     if (oddNumber != null)
     {
         println("Нечетное число: $oddNumber")
@@ -299,4 +216,5 @@ fun program6()
     else
     {
         println("Создать нечетное число невозможно")
-    }}
+    }
+}
