@@ -61,7 +61,9 @@ fun program1()
     if (s.isNotEmpty())
     {
         result += s.last()
-        if (count > 1) result += "$count"
+
+        if (count > 1)
+            result += "$count"
     }
     println("Результат: $result")
 }
